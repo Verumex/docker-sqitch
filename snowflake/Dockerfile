@@ -46,10 +46,7 @@ RUN apt-get -qq update \
     && apt-get clean \
     && rm -rf /var/cache/apt/* /var/lib/apt/lists/* \
     && rm -rf /man /usr/share/man /usr/share/doc \
-    && mkdir -p /usr/lib/snowflake/odbc/log \
-    && apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y git
+    && mkdir -p /usr/lib/snowflake/odbc/log
 
 # Install SnowSQL plus the ODBC driver and config.
 COPY --from=snow-build /work/snowsql /bin/
