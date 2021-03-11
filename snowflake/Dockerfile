@@ -34,7 +34,8 @@ RUN apt-get -qq update \
     # && SNOWSQL_DEST=. SNOWSQL_LOGIN_SHELL=/dev/null bash snowsql.bash \
     && sed -e '1,/^exit$/d' snowsql.bash | tar zxf - \
     && ./snowsql -Uv \
-    && echo "[connections]\naccountname = $sf_account\n\n[options]\nnoup = true" > /var/snowsql/.snowsql/config
+    && echo "[connections]\naccountname = $sf_account\n\n[options]\nnoup = true\nlog_file=~/snowsql_rt.log\nlog_bootstrap_file=~/log_bootstrap" > /var/snowsql/.snowsql/config
+    # && echo "[connections]\naccountname = HJ27726\nregion=eu-central-1\nusername=SNOWFLAKE_CI\ndbname=VMX\nwarehousename=DATA_ENGINEERING_WH\npassword=kirk*druf6SELK-degh\n\n[options]\nnoup = true" > /var/snowsql/.snowsql/config
 
 FROM sqitch/sqitch:latest
 
@@ -45,7 +46,10 @@ RUN apt-get -qq update \
     && apt-get clean \
     && rm -rf /var/cache/apt/* /var/lib/apt/lists/* \
     && rm -rf /man /usr/share/man /usr/share/doc \
-    && mkdir -p /usr/lib/snowflake/odbc/log
+    && mkdir -p /usr/lib/snowflake/odbc/log \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y git
 
 # Install SnowSQL plus the ODBC driver and config.
 COPY --from=snow-build /work/snowsql /bin/
