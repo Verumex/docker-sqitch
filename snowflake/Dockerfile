@@ -8,7 +8,7 @@ WORKDIR /work
 # https://sfc-repo.snowflakecomputing.com/index.html
 ADD https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.9-linux_x86_64.bash snowsql.bash
 ADD https://sfc-repo.snowflakecomputing.com/odbc/linux/2.22.1/snowflake_linux_x8664_odbc-2.22.1.tgz snowflake_linux_x8664_odbc.tgz
-COPY snowflake/conf ./
+COPY conf ./
 
 # Tell SnowSQL where to store its versions and config. Need to keep it inside
 # the image so it doesn't try to load the version from $HOME, which will
